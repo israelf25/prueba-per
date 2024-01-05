@@ -32,7 +32,7 @@ class MovieController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|unique:directors',
+            'title' => 'required|unique:movies',
             'release_date' => 'required',
             'gender' => 'required'
         ]);
@@ -59,7 +59,7 @@ class MovieController extends Controller
     public function update(Request $request, Movie $movie)
     {
         $movieData = new MovieDTO(...$request->all());
-        return $this->movieService->updateDirector($movie->id, $movieData);
+        return $this->movieService->updateMovie($movie->id, $movieData);
     }
 
     /**
