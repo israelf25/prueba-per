@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Repository;
+
+use App\Models\Director;
+
+class DirectorRepository
+{
+    public function getAllDirectors()
+    {
+        return Director::all();
+    }
+
+    public function createDirector(array $directorData)
+    {
+        return Director::create($directorData);
+    }
+
+    public function updateDirector(Director $director, array $directorData)
+    {
+        $director->update($directorData);
+        return $director;
+    }
+
+    public function deleteUser(Director $director)
+    {
+        $director->delete();
+    }
+}
