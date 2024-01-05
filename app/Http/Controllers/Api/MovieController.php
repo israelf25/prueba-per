@@ -3,17 +3,27 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\DTO\MovieDTO;
 use App\Models\Movie;
+use App\Services\MovieService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MovieController extends Controller
 {
+    protected $movieService;
+
+    public function __construct(MovieService $movieService)
+    {
+        $this->movieService = $movieService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $movie = $this->movieService->getAllMovie();
+        return $movie;
     }
 
     /**
@@ -21,7 +31,18 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|unique:directors',
+            'release_date' => 'required',
+            'gender' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $validator->errors()->toJson();
+        } else {
+            $movieData = new MovieDTO(...$request->all());
+            return $this->movieService->createDirector($movieData);
+        }
     }
 
     /**
@@ -29,7 +50,7 @@ class MovieController extends Controller
      */
     public function show(Movie $movie)
     {
-        //
+        return $movie->toJson();
     }
 
     /**
@@ -37,7 +58,8 @@ class MovieController extends Controller
      */
     public function update(Request $request, Movie $movie)
     {
-        //
+        $movieData = new MovieDTO(...$request->all());
+        return $this->movieService->updateDirector($movie->id, $movieData);
     }
 
     /**
@@ -45,6 +67,6 @@ class MovieController extends Controller
      */
     public function destroy(Movie $movie)
     {
-        //
+        return $this->movieService->deleteUser($movie->id);
     }
 }

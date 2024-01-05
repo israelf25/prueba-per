@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\DTO\DirectorDTO;
-use App\Http\Requests\StoreDirectorRequest;
 use App\Models\Director;
 use App\Services\DirectorService;
 use Illuminate\Support\Facades\Validator;
@@ -53,7 +52,7 @@ class DirectorController extends Controller
      */
     public function show(Director $director)
     {
-        //
+        return $director->toJson();
     }
 
     /**
@@ -61,7 +60,8 @@ class DirectorController extends Controller
      */
     public function update(Request $request, Director $director)
     {
-        //
+        $directorData = new DirectorDTO(...$request->all());
+        return $this->directorService->updateDirector($director->id, $directorData);
     }
 
     /**
@@ -69,6 +69,6 @@ class DirectorController extends Controller
      */
     public function destroy(Director $director)
     {
-        //
+        return $this->directorService->deleteUser($director->id);
     }
 }

@@ -29,20 +29,20 @@ class DirectorService
         return $this->directoryRepository->createDirector($directorData);
     }
 
-    // public function updateDirector(int $userId, array $directorData)
-    // {
-    //     $user = $this->directoryRepository->findUserById($userId);
-    //     if ($user) {
-    //         return $this->directoryRepository->updateUser($user, $userData);
-    //     }
-    //     return null;
-    // }
+    public function updateDirector($userId, $directorData)
+    {
+        $user = $this->directoryRepository->findDirectorById($userId);
+        if ($user) {
+            return $this->directoryRepository->updateDirector($user, $directorData);
+        }
+        return null;
+    }
 
-    // public function deleteUser(int $userId)
-    // {
-    //     $user = $this->directoryRepository->findUserById($userId);
-    //     if ($user) {
-    //         $this->directoryRepository->deleteUser($user);
-    //     }
-    // }
+    public function deleteUser($userId)
+    {
+        $user = $this->directoryRepository->findDirectorById($userId);
+        if ($user) {
+            $this->directoryRepository->deleteUser($user);
+        }
+    }
 }

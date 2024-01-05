@@ -16,10 +16,15 @@ class DirectorRepository
         return Director::create($directorData);
     }
 
-    public function updateDirector(Director $director, array $directorData)
+    public function updateDirector(Director $director, $directorData)
     {
+        $directorData = $directorData->toArray();
         $director->update($directorData);
         return $director;
+    }
+
+    public function findDirectorById($director){
+        return Director::find($director);
     }
 
     public function deleteUser(Director $director)
